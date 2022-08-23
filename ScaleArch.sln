@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{FDE8C2AE-3D31-4086-B850-23B21BB49EFE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScaleArch.ProfileServiceApi", "src\ScaleArch.ProfileServiceApi\ScaleArch.ProfileServiceApi.csproj", "{E7B186F4-F6B7-4201-BC42-B11794EB80AB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScaleArch.Core", "src\ScaleArch.Core\ScaleArch.Core.csproj", "{17961B45-46F5-4E07-B7E9-5AD449569746}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScaleArch.Sql", "src\ScaleArch.Sql\ScaleArch.Sql.csproj", "{DB728F82-126E-4385-9336-542A8F9174A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScaleArch.ProfileService.Contracts", "src\ScaleArch.ProfileService.Contracts\ScaleArch.ProfileService.Contracts.csproj", "{4435F4B2-FD1F-44A9-B118-C6E0DCD80754}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScaleArch.ApiTemplate", "ScaleArch.ApiTemplate\ScaleArch.ApiTemplate.csproj", "{5E7C4769-95E4-412A-A199-07EC4C54E2B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{35CCAB57-DA2B-4D6E-95A8-6BF977303B4D}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yaml = docker-compose.yaml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E7B186F4-F6B7-4201-BC42-B11794EB80AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7B186F4-F6B7-4201-BC42-B11794EB80AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7B186F4-F6B7-4201-BC42-B11794EB80AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7B186F4-F6B7-4201-BC42-B11794EB80AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17961B45-46F5-4E07-B7E9-5AD449569746}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17961B45-46F5-4E07-B7E9-5AD449569746}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17961B45-46F5-4E07-B7E9-5AD449569746}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17961B45-46F5-4E07-B7E9-5AD449569746}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB728F82-126E-4385-9336-542A8F9174A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB728F82-126E-4385-9336-542A8F9174A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB728F82-126E-4385-9336-542A8F9174A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB728F82-126E-4385-9336-542A8F9174A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4435F4B2-FD1F-44A9-B118-C6E0DCD80754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4435F4B2-FD1F-44A9-B118-C6E0DCD80754}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4435F4B2-FD1F-44A9-B118-C6E0DCD80754}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4435F4B2-FD1F-44A9-B118-C6E0DCD80754}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E7C4769-95E4-412A-A199-07EC4C54E2B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E7C4769-95E4-412A-A199-07EC4C54E2B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E7C4769-95E4-412A-A199-07EC4C54E2B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E7C4769-95E4-412A-A199-07EC4C54E2B7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{17961B45-46F5-4E07-B7E9-5AD449569746} = {FDE8C2AE-3D31-4086-B850-23B21BB49EFE}
+		{DB728F82-126E-4385-9336-542A8F9174A5} = {FDE8C2AE-3D31-4086-B850-23B21BB49EFE}
+		{4435F4B2-FD1F-44A9-B118-C6E0DCD80754} = {FDE8C2AE-3D31-4086-B850-23B21BB49EFE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6F2062D-8D86-4263-9239-D16AF455FDFD}
+	EndGlobalSection
+EndGlobal
