@@ -1,5 +1,7 @@
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.OpenApi.Models;
 using ScaleArch.ApiTemplate.Helpers;
 using Toolbelt.Mongo;
 
@@ -7,7 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen((c) =>
+{
+    c.CustomOperationIds(d => (d.ActionDescriptor as ControllerActionDescriptor)?.ActionName);
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
+});
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddMediatR(typeof(Program).Assembly);
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));

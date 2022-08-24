@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{FDE8C2AE-3D31-4086-B850-23B21BB49EFE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{FDE8C2AE-3D31-4086-B850-23B21BB49EFE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScaleArch.ProfileServiceApi", "src\ScaleArch.ProfileServiceApi\ScaleArch.ProfileServiceApi.csproj", "{E7B186F4-F6B7-4201-BC42-B11794EB80AB}"
 EndProject
