@@ -34,9 +34,9 @@ public class SampleController : ControllerBase
     }
 
     [HttpGet("get/{id}")]
-    public async Task<GetSampleViewModel> GetAsync(string id)
+    public async Task<GetSampleViewModel> GetAsync(string id, int number)
     {
-        var entity = await this.mediator.Send(new GetSample(id));
+        var entity = await this.mediator.Send(new GetSample(id, number));
         var result = this.mapper.Map<GetSampleViewModel>(entity);
 
         return result;

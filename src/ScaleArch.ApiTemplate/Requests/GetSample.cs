@@ -8,12 +8,16 @@ namespace ScaleArch.ApiTemplate.Requests;
 
 public class GetSample : IRequest<SampleEntity>
 {
-	public GetSample(string id)
+	public GetSample(
+        string id,
+        int number)
 	{
 		Id = id;
-	}
+        Number = number;
+    }
 
     public string Id { get; set; }
+    public int Number { get; set; }
 }
 
 public sealed class GetSampleValidator : AbstractValidator<GetSample>
@@ -21,6 +25,7 @@ public sealed class GetSampleValidator : AbstractValidator<GetSample>
     public GetSampleValidator(IMongoRepository<SampleEntity> repo)
     {
         RuleFor(x => x.Id).NotNull().NotEmpty();
+        RuleFor(x => x.Number).GreaterThan(5);
         RuleFor(x => x.Id).MustAsync(async (id, cancellationToken) =>
         {
             var entry = await repo.GetAsync(new MongoRequest<SampleEntity>(id, nameof(SampleEntity)));

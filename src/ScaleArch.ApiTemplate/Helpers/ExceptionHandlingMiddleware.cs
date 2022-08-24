@@ -26,7 +26,6 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
         {
             title = GetTitle(exception),
             status = statusCode,
-            detail = exception.Message,
             errors = GetErrors(exception)
         };
         httpContext.Response.ContentType = "application/json";
@@ -36,22 +35,26 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
     private static int GetStatusCode(Exception exception) =>
         exception switch
         {
+            ValidationException => StatusCodes.Status400BadRequest,
             _ => StatusCodes.Status500InternalServerError
         };
     private static string GetTitle(Exception exception) =>
         exception switch
         {
+            ValidationException => "Bad Request",
             ApplicationException applicationException => applicationException.Message,
             _ => "Server Error"
         };
-    private static IReadOnlyDictionary<string, string> GetErrors(Exception exception)
+    private static IEnumerable<object> GetErrors(Exception exception)
     {
-        IReadOnlyDictionary<string, string> errors = null;
+        IEnumerable<object> errors = null;
         if (exception is ValidationException validationException)
         {
-            errors = validationException.Errors
-                .Select(t => new KeyValuePair<string, string>(t.ErrorCode, JsonSerializer.Serialize(t)))
-                .ToDictionary(t => t.Key, t => t.Value);
+            errors = validationException.Errors.Select(t => new { PropertyName = t.PropertyName, ErrorMessage = t.ErrorMessage });
+        }
+        else
+        {
+            errors = new List<object> { new { exception.Message } };
         }
         return errors;
     }

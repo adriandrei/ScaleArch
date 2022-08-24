@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{35CCAB57-DA2B-4D6E-95A8-6BF977303B4D}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yaml = docker-compose.yaml
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScaleArch.ApiTemplate", "src\ScaleArch.ApiTemplate\ScaleArch.ApiTemplate.csproj", "{54B0AB5A-D49D-4E1C-B983-69585FDC9F80}"
