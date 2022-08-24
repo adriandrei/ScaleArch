@@ -33,8 +33,8 @@ public class SampleController : ControllerBase
         return samples.Select(t => t.Id);
     }
 
-    [HttpGet("get")]
-    public async Task<GetSampleViewModel> GetAsync([FromQuery]string id)
+    [HttpGet("get/{id}")]
+    public async Task<GetSampleViewModel> GetAsync(string id)
     {
         var entity = await this.mediator.Send(new GetSample(id));
         var result = this.mapper.Map<GetSampleViewModel>(entity);

@@ -1,6 +1,6 @@
 ﻿namespace ScaleArch.ApiTemplate.ViewModels;
 
-public class GetSampleViewModel
+public record GetSampleViewModel
 {
     public string Id { get; set; }
     public string Name { get; set; }

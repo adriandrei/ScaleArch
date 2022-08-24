@@ -1,8 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
 using ScaleArch.ApiTemplate.Models;
-
-
 using Toolbelt.Mongo.Interfaces;
 using Toolbelt.Mongo.Models;
 
@@ -20,9 +18,15 @@ public class GetSample : IRequest<SampleEntity>
 
 public sealed class GetSampleValidator : AbstractValidator<GetSample>
 {
-    public GetSampleValidator()
+    public GetSampleValidator(IMongoRepository<SampleEntity> repo)
     {
         RuleFor(x => x.Id).NotNull().NotEmpty();
+        RuleFor(x => x.Id).MustAsync(async (id, cancellationToken) =>
+        {
+            var entry = await repo.GetAsync(new MongoRequest<SampleEntity>(id, nameof(SampleEntity)));
+
+            return entry != null;
+        }).WithMessage($"Entity does not exist");
     }
 }
 public class GetSampleHandler : IRequestHandler<GetSample, SampleEntity>

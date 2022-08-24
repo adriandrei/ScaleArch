@@ -16,8 +16,8 @@ public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
             return await next();
         }
         var context = new ValidationContext<TRequest>(request);
-        var errorsDictionary = _validators
-            .Select(x => x.Validate(context))
+        var validationErrors = await Task.WhenAll(_validators.Select(t => t.ValidateAsync(context)));
+        var errorsDictionary = validationErrors
             .SelectMany(x => x.Errors)
             .Where(x => x != null)
             .GroupBy(
