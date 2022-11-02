@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using ScaleArch.ApiTemplate.Models;
-using System.Web.Http;
 using Toolbelt.Mongo.Interfaces;
 
 namespace ScaleArch.ApiTemplate.Requests;
