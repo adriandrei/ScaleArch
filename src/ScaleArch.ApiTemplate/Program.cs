@@ -1,6 +1,7 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.OpenApi.Models;
 using ScaleArch.ApiTemplate.Helpers;
 using Toolbelt.Mongo;
@@ -24,9 +25,16 @@ builder.Services.AddMongo(options =>
     options.ConnectionString = builder.Configuration.GetValue<string>("Mongo:ConnectionString");
     options.Database = builder.Configuration.GetValue<string>("Mongo:Database");
 });
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+    options.Providers.Add<BrotliCompressionProvider>();
+    options.Providers.Add<GzipCompressionProvider>();
+});
 
 var app = builder.Build();
 
+app.UseResponseCompression();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -34,11 +42,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
-app.MapControllers();
-
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.MapControllers();
 
 app.Run();

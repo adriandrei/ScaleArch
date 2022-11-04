@@ -33,6 +33,7 @@ public class SampleController : ControllerBase
     [ProducesResponseType(typeof(object), 500)]
     public async Task<IEnumerable<string>> ListAsync()
     {
+        throw new Exception();
         var samples = await this.mediator.Send(new ListSample());
         return samples.Select(t => t.Id);
     }

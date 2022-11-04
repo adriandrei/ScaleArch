@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 
 namespace ScaleArch.ApiTemplate.Helpers;
@@ -9,24 +10,28 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
     public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger) => _logger = logger;
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
+        var traceId = Guid.NewGuid();
         try
         {
+            
+            context.Response.Headers.Add("x-traceId", traceId.ToString());
             await next(context);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, e.Message);
-            await HandleExceptionAsync(context, e);
+            _logger.LogError(e, $"traceId: {traceId}\n{e.Message}");
+            await HandleExceptionAsync(context, e, traceId);
         }
     }
-    private static async Task HandleExceptionAsync(HttpContext httpContext, Exception exception)
+    private static async Task HandleExceptionAsync(HttpContext httpContext, Exception exception, Guid traceId)
     {
         var statusCode = GetStatusCode(exception);
         var response = new
         {
             title = GetTitle(exception),
             status = statusCode,
-            errors = GetErrors(exception)
+            errors = GetErrors(exception),
+            traceId = traceId
         };
         httpContext.Response.ContentType = "application/json";
         httpContext.Response.StatusCode = statusCode;
@@ -54,7 +59,7 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
         }
         else
         {
-            errors = new List<object> { new { exception.Message } };
+            errors = new List<object> { "Internal Server Error" };
         }
         return errors;
     }
