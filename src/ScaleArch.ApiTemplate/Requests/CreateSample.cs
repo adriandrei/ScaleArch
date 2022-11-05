@@ -18,9 +18,15 @@ public class CreateSample : IRequest<IStatusCodeActionResult>
 
 public sealed class CreateSampleValidator : AbstractValidator<CreateSample>
 {
-	public CreateSampleValidator()
+	public CreateSampleValidator(IMongoRepository<SampleEntity> repo)
 	{
 		RuleFor(t => t.Name).NotNull().NotEmpty();
+		RuleFor(t => t.Name).MinimumLength(3);
+		RuleFor(t => t.Name).MustAsync(async (name, cancellationToken) =>
+		{
+			var existingWithSameName = await repo.ListAsync(nameof(SampleEntity), prop => prop.Name == name);
+			return !existingWithSameName.Any();
+		}).WithMessage(t => $"A {nameof(SampleEntity)} already exists for {t.Name}");
 	}
 }
 
