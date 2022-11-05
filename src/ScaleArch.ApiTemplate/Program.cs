@@ -1,9 +1,12 @@
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.OpenApi.Models;
 using ScaleArch.ApiTemplate.Helpers;
+using Swashbuckle.AspNetCore.Swagger;
 using Toolbelt.Mongo;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +22,8 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddMediatR(typeof(Program).Assembly);
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.AddFluentValidationRulesToSwagger();
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 builder.Services.AddMongo(options =>
 {

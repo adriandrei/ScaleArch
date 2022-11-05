@@ -1,9 +1,17 @@
 ﻿using FluentValidation;
-using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 
 namespace ScaleArch.ApiTemplate.Helpers;
 
+internal record class ExceptionResponse
+{
+    public static ExceptionResponse From(int status) => new ExceptionResponse { Status = status };
+
+    public string Title { get; set; }
+    public int Status { get; set; }
+    public IEnumerable<object> Errors { get; set; }
+    public Guid TraceId { get; set; }
+}
 internal sealed class ExceptionHandlingMiddleware : IMiddleware
 {
     private readonly ILogger<ExceptionHandlingMiddleware> _logger;
@@ -26,12 +34,12 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
     private static async Task HandleExceptionAsync(HttpContext httpContext, Exception exception, Guid traceId)
     {
         var statusCode = GetStatusCode(exception);
-        var response = new
+        var response = new ExceptionResponse
         {
-            title = GetTitle(exception),
-            status = statusCode,
-            errors = GetErrors(exception),
-            traceId = traceId
+            Title = GetTitle(exception),
+            Status = statusCode,
+            Errors = GetErrors(exception),
+            TraceId = traceId
         };
         httpContext.Response.ContentType = "application/json";
         httpContext.Response.StatusCode = statusCode;
