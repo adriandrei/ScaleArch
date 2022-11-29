@@ -11,7 +11,7 @@ namespace ScaleArch.ApiTemplate.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class SampleController : ControllerBase
+public class SampleController : BaseController
 {
     private readonly IMediator mediator;
     private readonly IMapper mapper;
@@ -55,10 +55,10 @@ public class SampleController : ControllerBase
     [HttpPost]
     [Route("upsert")]
     [SwaggerOperation(Summary = $"Creates an Entity")]
-    [ProducesResponseType(202)]
+    [ProducesResponseType(typeof(string), 202)]
     [ProducesResponseType(typeof(ExceptionResponse), 400)]
     [ProducesResponseType(typeof(ExceptionResponse), 500)]
-    public async Task<IStatusCodeActionResult> UpsertAsync([FromBody]CreateSample model)
+    public async Task<string> UpsertAsync([FromBody]CreateSample model)
     {
         return await this.mediator.Send(model);
     }

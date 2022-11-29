@@ -1,36 +1,51 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Graph;
+using ScaleArch.AadWebApi.Extensions;
 
-namespace ScaleArch.AadWebApi.Controllers
+namespace ScaleArch.AadWebApi.Controllers;
+
+
+[ApiController]
+[Route("api/[controller]/")]
+public class WeatherForecastController : BaseController
 {
-    [Authorize("Admin")]
-    [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    private static readonly string[] Summaries = new[]
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+};
 
-        private readonly ILogger<WeatherForecastController> _logger;
+    private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
+    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    {
+        _logger = logger;
+    }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public async Task<IEnumerable<WeatherForecast>> Get()
+    [Authorize(Policies.AFIR)]
+    [HttpGet("GetForecastAfir")]
+    public async Task<IEnumerable<WeatherForecast>> GetAsyncForAFIR()
+    {
+        _logger.LogInformation($"UserId {GetUserId()}");
+        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-        }
+            Date = DateTime.Now.AddDays(index),
+            TemperatureC = Random.Shared.Next(-20, 55),
+            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+        })
+        .ToArray();
+    }
+
+    [Authorize(Policies.Producer)]
+    [HttpGet("GetForecastProducer")]
+    public async Task<IEnumerable<WeatherForecast>> GetAsyncForProducer()
+    {
+        _logger.LogInformation($"UserId {GetUserId()}");
+        return Enumerable.Range(1, 2).Select(index => new WeatherForecast
+        {
+            Date = DateTime.Now.AddDays(index),
+            TemperatureC = Random.Shared.Next(-20, 55),
+            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+        })
+        .ToArray();
     }
 }

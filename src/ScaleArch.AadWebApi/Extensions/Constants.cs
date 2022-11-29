@@ -12,7 +12,7 @@ public static class Extensions
 
 public static class Policies
 {
-    public static string Admin = "Admin";
-    public static string Producer = "Producer";
-    public static string Retailer = "Retailer";
+    public const string AFIR = "AFIR";
+    public const string Producer = "Producer";
+    public const string Retailer = "Retailer";
 }

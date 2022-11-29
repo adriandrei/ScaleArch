@@ -14,7 +14,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddRole(Policies.Admin);
+    options.AddRole(Policies.AFIR);
     options.AddRole(Policies.Producer);
     options.AddRole(Policies.Retailer);
 });

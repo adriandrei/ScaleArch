@@ -1,13 +1,11 @@
 ﻿using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using ScaleArch.ApiTemplate.Models;
 using Toolbelt.Mongo.Interfaces;
 
 namespace ScaleArch.ApiTemplate.Requests;
 
-public class CreateSample : IRequest<IStatusCodeActionResult>
+public class CreateSample : IRequest<string>
 {
 	public CreateSample(string name)
 	{
@@ -30,7 +28,7 @@ public sealed class CreateSampleValidator : AbstractValidator<CreateSample>
 	}
 }
 
-public class CreateSampleHandler : IRequestHandler<CreateSample, IStatusCodeActionResult>
+public class CreateSampleHandler : IRequestHandler<CreateSample, string>
 {
 	private readonly IMongoRepository<SampleEntity> repo;
 
@@ -40,11 +38,11 @@ public class CreateSampleHandler : IRequestHandler<CreateSample, IStatusCodeActi
 		this.repo = repo;
 	}
 
-	public async Task<IStatusCodeActionResult> Handle(CreateSample request, CancellationToken cancellationToken)
+	public async Task<string> Handle(CreateSample request, CancellationToken cancellationToken)
 	{
 		var entity = new SampleEntity(request.Name);
 		await this.repo.CreateAsync(entity);
 
-		return new AcceptedResult();
+		return entity.Id;
 	}
 }
